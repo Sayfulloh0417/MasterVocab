@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f0e17;--bg2:#1a1927;--bg3:#252436;
+  --accent:#7c6af7;--accent2:#f7b26a;--accent3:#6af7c8;
+  --text:#fffffe;--text2:#a7a5c0;--text3:#6b698a;
+  --card:#1e1d2e;--border:#2e2c44;
+  --red:#f76a6a;--green:#6af7a0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+.app{display:flex;flex-direction:column;min-height:100vh}
+
+/* Header */
+.header{padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.02em}
+.logo span{color:var(--accent)}
+.word-count{font-size:0.75rem;color:var(--text3);background:var(--bg3);padding:4px 12px;border-radius:20px}
+
+/* Nav */
+.nav{display:flex;gap:4px;padding:1rem 1.5rem;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:500;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.nav-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.nav-btn:hover:not(.active){background:var(--bg3);color:var(--text)}
+
+/* Pages */
+.page{display:none;padding:1.5rem;flex:1}
+.page.active{display:block}
+
+/* Add word */
+.add-form{display:flex;flex-direction:column;gap:1rem;max-width:500px}
+.field-label{font-size:0.75rem;color:var(--text3);margin-bottom:4px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase}
+.field-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s}
+.field-input:focus{border-color:var(--accent)}
+.field-input::placeholder{color:var(--text3)}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:13px 24px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.02em}
+.btn-primary:hover{opacity:0.85;transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.add-success{background:rgba(106,247,160,0.1);border:1px solid rgba(106,247,160,0.3);border-radius:10px;padding:12px 16px;color:var(--green);font-size:0.85rem;display:none}
+
+/* Word List */
+.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.list-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem}
+.search-input{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;width:160px;transition:border-color 0.2s}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.word-list{display:flex;flex-direction:column;gap:8px}
+.word-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.2s;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.word-card:hover{border-color:var(--accent)}
+.word-en{font-family:'Syne',sans-serif;font-weight:600;font-size:0.95rem;color:var(--text)}
+.word-uz{font-size:0.85rem;color:var(--text2);margin-top:2px}
+.word-ex{font-size:0.75rem;color:var(--text3);margin-top:4px;font-style:italic}
+.del-btn{background:transparent;border:none;color:var(--text3);cursor:pointer;padding:4px 8px;border-radius:6px;font-size:1rem;transition:color 0.2s}
+.del-btn:hover{color:var(--red)}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--text3)}
+.empty-icon{font-size:3rem;margin-bottom:1rem}
+.empty-title{font-family:'Syne',sans-serif;font-size:1rem;color:var(--text2);margin-bottom:0.5rem}
+
+/* Stats page */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:1.5rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:4px}
+.stat-label{font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em}
+.stat-accent{color:var(--accent)}
+.stat-green{color:var(--green)}
+.stat-amber{color:var(--accent2)}
+
+/* Game page */
+.game-menu{display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem}
+.game-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:14px}
+.game-card:hover{border-color:var(--accent);transform:translateX(4px)}
+.game-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.game-icon.quiz{background:rgba(124,106,247,0.2)}
+.game-icon.typing{background:rgba(247,178,106,0.2)}
+.game-icon.flash{background:rgba(106,247,200,0.2)}
+.game-info-title{font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem}
+.game-info-desc{font-size:0.78rem;color:var(--text3);margin-top:2px}
+
+/* Game area */
+.game-area{display:none}
+.game-area.active{display:block}
+.game-q{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin:1.5rem 0 1rem;text-align:center;line-height:1.3}
+.game-sub{font-size:0.85rem;color:var(--text3);text-align:center;margin-bottom:1.5rem}
+.progress-bar{height:4px;background:var(--bg3);border-radius:2px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quiz-opt{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);transition:all 0.2s;text-align:center}
+.quiz-opt:hover{border-color:var(--accent);background:rgba(124,106,247,0.1)}
+.quiz-opt.correct{border-color:var(--green);background:rgba(106,247,160,0.1);color:var(--green)}
+.quiz-opt.wrong{border-color:var(--red);background:rgba(247,106,106,0.1);color:var(--red)}
+.quiz-opt:disabled{cursor:default}
+.typing-input{width:100%;background:var(--bg3);border:2px solid var(--border);border-radius:12px;padding:16px;color:var(--text);font-family:'Syne',sans-serif;font-size:1.1rem;outline:none;text-align:center;transition:border-color 0.2s;margin-bottom:12px}
+.typing-input:focus{border-color:var(--accent)}
+.feedback{text-align:center;font-size:0.9rem;min-height:24px;margin-bottom:12px;font-weight:500}
+.feedback.ok{color:var(--green)}
+.feedback.bad{color:var(--red)}
+.flash-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:2rem;text-align:center;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;margin-bottom:1rem}
+.flash-card:hover{border-color:var(--accent)}
+.flash-word{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800}
+.flash-translation{font-size:1rem;color:var(--text2);margin-top:8px}
+.flash-hint{font-size:0.75rem;color:var(--text3);margin-top:1rem}
+.flash-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.btn-know{background:rgba(106,247,160,0.15);border:1px solid rgba(106,247,160,0.4);color:var(--green);border-radius:10px;padding:12px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;transition:all 0.2s}
+.btn-know:hover{background:rgba(106,247,160,0.25)}
+.btn-dunno{background:rgba(247,106,106,0.15);border:1px solid rgba(247,106,106,0.4);color:var(--red);border-radius:10px;padding:12px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;transition:all 0.2s}
+.btn-dunno:hover{background:rgba(247,106,106,0.25)}
+.btn-next{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 24px;font-family:'Syne',sans-serif;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px;transition:opacity 0.2s;font-size:0.9rem}
+.btn-next:hover{opacity:0.85}
+.btn-skip{background:transparent;border:1px solid var(--border);color:var(--text3);border-radius:10px;padding:10px;font-family:'DM Sans',sans-serif;cursor:pointer;width:100%;font-size:0.85rem;transition:all 0.2s}
+.btn-skip:hover{border-color:var(--text2);color:var(--text2)}
+.btn-back{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:0.85rem;padding:0;margin-bottom:1rem;display:flex;align-items:center;gap:6px;transition:color 0.2s}
+.btn-back:hover{color:var(--text)}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center}
+.result-score{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:var(--accent)}
+.result-label{color:var(--text2);font-size:0.9rem;margin-top:8px}
+.result-emoji{font-size:2.5rem;margin-bottom:1rem}
+.btn-retry{background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px 24px;font-family:'Syne',sans-serif;font-weight:600;cursor:pointer;margin-top:1rem;font-size:0.85rem;transition:all 0.2s}
+.btn-retry:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo">Master<span>Vocab</span></div>
+    <div class="word-count" id="hdr-count">0 so'z</div>
+  </div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="showPage('add')">+ So'z qo'sh</button>
+    <button class="nav-btn" onclick="showPage('list')">Ro'yxat</button>
+    <button class="nav-btn" onclick="showPage('games')">O'yinlar</button>
+    <button class="nav-btn" onclick="showPage('stats')">Statistika</button>
+  </div>
+
+  <!-- ADD PAGE -->
+  <div class="page active" id="page-add">
+    <div class="add-form">
+      <div>
+        <div class="field-label">Inglizcha so'z</div>
+        <input class="field-input" id="inp-word" placeholder="masalan: ambitious" autocomplete="off">
+      </div>
+      <div>
+        <div class="field-label">O'zbekcha tarjima</div>
+        <input class="field-input" id="inp-trans" placeholder="masalan: maqsadli, intiluvchi" autocomplete="off">
+      </div>
+      <div>
+        <div class="field-label">Misol jumla (ixtiyoriy)</div>
+        <input class="field-input" id="inp-ex" placeholder="masalan: She is very ambitious." autocomplete="off">
+      </div>
+      <button class="btn-primary" onclick="addWord()">Qo'shish</button>
+      <div class="add-success" id="add-success">So'z muvaffaqiyatli qo'shildi!</div>
+    </div>
+  </div>
+
+  <!-- LIST PAGE -->
+  <div class="page" id="page-list">
+    <div class="list-header">
+      <div class="list-title">Barcha so'zlar</div>
+      <input class="search-input" id="search-inp" placeholder="Qidirish..." oninput="renderList()">
+    </div>
+    <div class="word-list" id="word-list"></div>
+  </div>
+
+  <!-- GAMES PAGE -->
+  <div class="page" id="page-games">
+    <div id="game-menu-area">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:1rem">O'yinlar</div>
+      <div class="game-menu">
+        <div class="game-card" onclick="startQuiz()">
+          <div class="game-icon quiz">❓</div>
+          <div>
+            <div class="game-info-title">Quiz</div>
+            <div class="game-info-desc">4 variant ichidan to'g'ri tarjimani tanlang</div>
+          </div>
+        </div>
+        <div class="game-card" onclick="startTyping()">
+          <div class="game-icon typing">✍️</div>
+          <div>
+            <div class="game-info-title">Typing</div>
+            <div class="game-info-desc">So'zning tarjimasini o'zingiz yozing</div>
+          </div>
+        </div>
+        <div class="game-card" onclick="startFlash()">
+          <div class="game-icon flash">🃏</div>
+          <div>
+            <div class="game-info-title">Flashcard</div>
+            <div class="game-info-desc">Bildim / Bilmadim usulida takrorlang</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="game-area" id="quiz-area">
+      <button class="btn-back" onclick="backToMenu()">← Orqaga</button>
+      <div class="progress-bar"><div class="progress-fill" id="quiz-progress"></div></div>
+      <div class="game-sub" id="quiz-counter"></div>
+      <div class="game-q" id="quiz-word"></div>
+      <div class="quiz-options" id="quiz-opts"></div>
+    </div>
+
+    <!-- TYPING -->
+    <div class="game-area" id="typing-area">
+      <button class="btn-back" onclick="backToMenu()">← Orqaga</button>
+      <div class="progress-bar"><div class="progress-fill" id="typing-progress"></div></div>
+      <div class="game-sub" id="typing-counter"></div>
+      <div class="game-q" id="typing-word"></div>
+      <div class="feedback" id="typing-feedback"></div>
+      <input class="typing-input" id="typing-inp" placeholder="Tarjimasini yozing..." autocomplete="off">
+      <button class="btn-next" onclick="checkTyping()">Tekshirish</button>
+      <button class="btn-skip" onclick="skipTyping()">O'tkazib yuborish</button>
+    </div>
+
+    <!-- FLASHCARD -->
+    <div class="game-area" id="flash-area">
+      <button class="btn-back" onclick="backToMenu()">← Orqaga</button>
+      <div class="progress-bar"><div class="progress-fill" id="flash-progress"></div></div>
+      <div class="game-sub" id="flash-counter"></div>
+      <div class="flash-card" id="flash-card" onclick="revealFlash()">
+        <div class="flash-word" id="flash-word"></div>
+        <div class="flash-translation" id="flash-trans" style="display:none"></div>
+        <div class="flash-hint" id="flash-hint">Ko'rish uchun bosing</div>
+      </div>
+      <div class="flash-btns" id="flash-btns" style="display:none">
+        <button class="btn-dunno" onclick="flashAnswer(false)">❌ Bilmadim</button>
+        <button class="btn-know" onclick="flashAnswer(true)">✅ Bildim</button>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="game-area" id="result-area">
+      <div class="result-box">
+        <div class="result-emoji" id="result-emoji"></div>
+        <div class="result-score" id="result-score"></div>
+        <div class="result-label" id="result-label"></div>
+        <button class="btn-retry" onclick="backToMenu()">← Boshqa o'yin</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS PAGE -->
+  <div class="page" id="page-stats">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val stat-accent" id="st-total">0</div>
+        <div class="stat-label">Jami so'zlar</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val stat-green" id="st-today">0</div>
+        <div class="stat-label">Bugun qo'shildi</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val stat-amber" id="st-games">0</div>
+        <div class="stat-label">O'yinlar o'ynaldi</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="st-acc" style="color:var(--accent3)">0%</div>
+        <div class="stat-label">O'rtacha aniqlik</div>
+      </div>
+    </div>
+    <div style="font-family:'Syne',sans-serif;font-weight:600;font-size:0.9rem;color:var(--text2);margin-bottom:0.75rem">Oxirgi qo'shilgan so'zlar</div>
+    <div id="recent-words"></div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY='mastervocab_words';
+const STATS_KEY='mastervocab_stats';
+
+function getWords(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]')}catch{return[]}}
+function saveWords(w){localStorage.setItem(STORAGE_KEY,JSON.stringify(w))}
+function getStats(){try{return JSON.parse(localStorage.getItem(STATS_KEY)||'{"games":0,"correct":0,"total":0}')}catch{return{games:0,correct:0,total:0}}}
+function saveStats(s){localStorage.setItem(STATS_KEY,JSON.stringify(s))}
+
+function today(){return new Date().toISOString().split('T')[0]}
+
+function updateHeaderCount(){
+  const w=getWords();
+  document.getElementById('hdr-count').textContent=w.length+' so\'z';
+}
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const btns=document.querySelectorAll('.nav-btn');
+  const map={add:0,list:1,games:2,stats:3};
+  btns[map[name]].classList.add('active');
+  if(name==='list')renderList();
+  if(name==='stats')renderStats();
+  if(name==='games')backToMenu();
+}
+
+// ADD WORD
+function addWord(){
+  const w=document.getElementById('inp-word').value.trim();
+  const t=document.getElementById('inp-trans').value.trim();
+  const e=document.getElementById('inp-ex').value.trim();
+  if(!w||!t)return;
+  const words=getWords();
+  if(words.find(x=>x.word.toLowerCase()===w.toLowerCase())){
+    const s=document.getElementById('add-success');
+    s.style.display='block';s.style.background='rgba(247,106,106,0.1)';
+    s.style.borderColor='rgba(247,106,106,0.3)';s.style.color='var(--red)';
+    s.textContent='Bu so\'z allaqachon mavjud!';
+    setTimeout(()=>s.style.display='none',2500);return;
+  }
+  words.unshift({id:Date.now(),word:w,translation:t,example:e,date:today(),seen:0,correct:0});
+  saveWords(words);
+  document.getElementById('inp-word').value='';
+  document.getElementById('inp-trans').value='';
+  document.getElementById('inp-ex').value='';
+  const s=document.getElementById('add-success');
+  s.style.display='block';s.style.background='rgba(106,247,160,0.1)';
+  s.style.borderColor='rgba(106,247,160,0.3)';s.style.color='var(--green)';
+  s.textContent='"'+w+'" muvaffaqiyatli qo\'shildi!';
+  setTimeout(()=>s.style.display='none',2500);
+  updateHeaderCount();
+}
+
+// WORD LIST
+function renderList(){
+  const q=(document.getElementById('search-inp').value||'').toLowerCase();
+  const words=getWords().filter(w=>!q||w.word.toLowerCase().includes(q)||w.translation.toLowerCase().includes(q));
+  const el=document.getElementById('word-list');
+  if(!words.length){
+    el.innerHTML='<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-title">So\'z topilmadi</div><div>Yangi so\'z qo\'shing</div></div>';return;
+  }
+  el.innerHTML=words.map(w=>`
+    <div class="word-card">
+      <div>
+        <div class="word-en">${w.word}</div>
+        <div class="word-uz">${w.translation}</div>
+        ${w.example?`<div class="word-ex">${w.example}</div>`:''}
+      </div>
+      <button class="del-btn" onclick="deleteWord(${w.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+function deleteWord(id){
+  const words=getWords().filter(w=>w.id!==id);
+  saveWords(words);renderList();updateHeaderCount();
+}
+
+// STATS
+function renderStats(){
+  const words=getWords();
+  const stats=getStats();
+  const todayWords=words.filter(w=>w.date===today());
+  const acc=stats.total>0?Math.round(stats.correct/stats.total*100):0;
+  document.getElementById('st-total').textContent=words.length;
+  document.getElementById('st-today').textContent=todayWords.length;
+  document.getElementById('st-games').textContent=stats.games;
+  document.getElementById('st-acc').textContent=acc+'%';
+  const recent=words.slice(0,5);
+  document.getElementById('recent-words').innerHTML=recent.length?recent.map(w=>`
+    <div class="word-card" style="margin-bottom:6px">
+      <div>
+        <div class="word-en">${w.word}</div>
+        <div class="word-uz">${w.translation}</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--text3)">${w.date}</div>
+    </div>
+  `).join(''):'<div style="color:var(--text3);font-size:0.85rem">Hali so\'z yo\'q</div>';
+}
+
+// GAMES
+let gameWords=[];let gameIdx=0;let gameCorrect=0;let gameTotal=0;
+
+function backToMenu(){
+  document.getElementById('game-menu-area').style.display='block';
+  document.querySelectorAll('.game-area').forEach(a=>a.classList.remove('active'));
+}
+
+function checkMinWords(n){
+  const w=getWords();
+  if(w.length<n){alert('O\'yin uchun kamida '+n+' ta so\'z kerak!\nHozir: '+w.length+' ta');return false;}
+  return true;
+}
+
+function shuffle(a){return a.sort(()=>Math.random()-0.5)}
+
+// QUIZ
+function startQuiz(){
+  if(!checkMinWords(4))return;
+  const all=getWords();gameWords=shuffle([...all]).slice(0,Math.min(10,all.length));
+  gameIdx=0;gameCorrect=0;gameTotal=gameWords.length;
+  document.getElementById('game-menu-area').style.display='none';
+  document.getElementById('quiz-area').classList.add('active');
+  showQuizQ();
+}
+
+function showQuizQ(){
+  if(gameIdx>=gameTotal){showResult('quiz');return;}
+  const cur=gameWords[gameIdx];
+  const pct=Math.round(gameIdx/gameTotal*100);
+  document.getElementById('quiz-progress').style.width=pct+'%';
+  document.getElementById('quiz-counter').textContent=(gameIdx+1)+' / '+gameTotal;
+  document.getElementById('quiz-word').textContent=cur.word;
+  const all=getWords();
+  const wrong=shuffle(all.filter(w=>w.id!==cur.id)).slice(0,3);
+  const opts=shuffle([...wrong,cur]);
+  document.getElementById('quiz-opts').innerHTML=opts.map(o=>`
+    <button class="quiz-opt" onclick="quizAnswer(this,'${o.id}','${cur.id}')">${o.translation}</button>
+  `).join('');
+}
+
+function quizAnswer(btn,chosen,correct){
+  document.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+  if(chosen==correct){
+    btn.classList.add('correct');gameCorrect++;
+    updateWordStat(parseInt(correct),true);
+  } else {
+    btn.classList.add('wrong');
+    updateWordStat(parseInt(correct),false);
+    document.querySelectorAll('.quiz-opt').forEach(b=>{if(b.onclick.toString().includes("'"+correct+"'"))b.classList.add('correct')});
+  }
+  setTimeout(()=>{gameIdx++;showQuizQ();},900);
+}
+
+// TYPING
+function startTyping(){
+  if(!checkMinWords(2))return;
+  const all=getWords();gameWords=shuffle([...all]).slice(0,Math.min(10,all.length));
+  gameIdx=0;gameCorrect=0;gameTotal=gameWords.length;
+  document.getElementById('game-menu-area').style.display='none';
+  document.getElementById('typing-area').classList.add('active');
+  showTypingQ();
+}
+
+function showTypingQ(){
+  if(gameIdx>=gameTotal){showResult('typing');return;}
+  const cur=gameWords[gameIdx];
+  const pct=Math.round(gameIdx/gameTotal*100);
+  document.getElementById('typing-progress').style.width=pct+'%';
+  document.getElementById('typing-counter').textContent=(gameIdx+1)+' / '+gameTotal;
+  document.getElementById('typing-word').textContent=cur.word;
+  document.getElementById('typing-inp').value='';
+  document.getElementById('typing-feedback').textContent='';
+  document.getElementById('typing-feedback').className='feedback';
+  document.getElementById('typing-inp').focus();
+}
+
+function checkTyping(){
+  const cur=gameWords[gameIdx];
+  const ans=document.getElementById('typing-inp').value.trim().toLowerCase();
+  const correct=cur.translation.toLowerCase();
+  const fb=document.getElementById('typing-feedback');
+  if(ans===correct||correct.includes(ans)&&ans.length>2){
+    fb.textContent='✓ To\'g\'ri!';fb.className='feedback ok';
+    gameCorrect++;updateWordStat(cur.id,true);
+  } else {
+    fb.textContent='✗ Noto\'g\'ri. To\'g\'risi: '+cur.translation;
+    fb.className='feedback bad';updateWordStat(cur.id,false);
+  }
+  setTimeout(()=>{gameIdx++;showTypingQ();},1200);
+}
+
+function skipTyping(){
+  const cur=gameWords[gameIdx];
+  updateWordStat(cur.id,false);
+  gameIdx++;showTypingQ();
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&document.getElementById('typing-area').classList.contains('active')&&document.activeElement===document.getElementById('typing-inp')){
+    checkTyping();
+  }
+  if(e.key==='Enter'&&document.getElementById('page-add').classList.contains('active')&&(document.activeElement===document.getElementById('inp-trans')||document.activeElement===document.getElementById('inp-ex'))){
+    addWord();
+  }
+});
+
+// FLASHCARD
+let flashRevealed=false;
+function startFlash(){
+  if(!checkMinWords(1))return;
+  const all=getWords();gameWords=shuffle([...all]).slice(0,Math.min(15,all.length));
+  gameIdx=0;gameCorrect=0;gameTotal=gameWords.length;flashRevealed=false;
+  document.getElementById('game-menu-area').style.display='none';
+  document.getElementById('flash-area').classList.add('active');
+  showFlashCard();
+}
+
+function showFlashCard(){
+  if(gameIdx>=gameTotal){showResult('flash');return;}
+  const cur=gameWords[gameIdx];
+  const pct=Math.round(gameIdx/gameTotal*100);
+  document.getElementById('flash-progress').style.width=pct+'%';
+  document.getElementById('flash-counter').textContent=(gameIdx+1)+' / '+gameTotal;
+  document.getElementById('flash-word').textContent=cur.word;
+  document.getElementById('flash-trans').style.display='none';
+  document.getElementById('flash-trans').textContent=cur.translation+(cur.example?' — '+cur.example:'');
+  document.getElementById('flash-hint').style.display='block';
+  document.getElementById('flash-hint').textContent='Ko\'rish uchun bosing';
+  document.getElementById('flash-btns').style.display='none';
+  flashRevealed=false;
+}
+
+function revealFlash(){
+  if(flashRevealed)return;
+  flashRevealed=true;
+  document.getElementById('flash-trans').style.display='block';
+  document.getElementById('flash-hint').textContent='Qanday? Quyidagi tugmani bosing';
+  document.getElementById('flash-btns').style.display='grid';
+}
+
+function flashAnswer(knew){
+  const cur=gameWords[gameIdx];
+  if(knew){gameCorrect++;updateWordStat(cur.id,true);}
+  else{updateWordStat(cur.id,false);}
+  gameIdx++;showFlashCard();
+}
+
+// RESULT
+function showResult(type){
+  document.querySelectorAll('.game-area').forEach(a=>a.classList.remove('active'));
+  document.getElementById('result-area').classList.add('active');
+  const pct=gameTotal>0?Math.round(gameCorrect/gameTotal*100):0;
+  const emoji=pct>=90?'🏆':pct>=70?'😊':pct>=50?'😅':'💪';
+  document.getElementById('result-emoji').textContent=emoji;
+  document.getElementById('result-score').textContent=gameCorrect+'/'+gameTotal;
+  document.getElementById('result-label').textContent='Aniqlik: '+pct+'%';
+  const stats=getStats();stats.games++;stats.correct+=gameCorrect;stats.total+=gameTotal;
+  saveStats(stats);
+}
+
+function updateWordStat(id,correct){
+  const words=getWords();
+  const w=words.find(x=>x.id===id);
+  if(w){w.seen=(w.seen||0)+1;if(correct)w.correct=(w.correct||0)+1;}
+  saveWords(words);
+}
+
+updateHeaderCount();
+</script>
+</body>
+</html>
