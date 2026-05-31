@@ -57,6 +57,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .word-card:hover{border-color:var(--accent)}
 .word-en{font-family:'Syne',sans-serif;font-weight:600;font-size:0.95rem;color:var(--text)}
 .word-uz{font-size:0.85rem;color:var(--text2);margin-top:2px}
+.word-syn{font-size:0.78rem;color:var(--accent2);margin-top:3px}
+.word-syn span{opacity:0.7}
 .word-ex{font-size:0.75rem;color:var(--text3);margin-top:4px;font-style:italic}
 .del-btn{background:transparent;border:none;color:var(--text3);cursor:pointer;padding:4px 8px;border-radius:6px;font-size:1rem;transition:color 0.2s}
 .del-btn:hover{color:var(--red)}
@@ -106,6 +108,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .flash-card:hover{border-color:var(--accent)}
 .flash-word{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800}
 .flash-translation{font-size:1rem;color:var(--text2);margin-top:8px}
+.flash-synonym{font-size:0.85rem;color:var(--accent2);margin-top:6px}
 .flash-hint{font-size:0.75rem;color:var(--text3);margin-top:1rem}
 .flash-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
 .btn-know{background:rgba(106,247,160,0.15);border:1px solid rgba(106,247,160,0.4);color:var(--green);border-radius:10px;padding:12px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;transition:all 0.2s}
@@ -149,6 +152,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div>
         <div class="field-label">O'zbekcha tarjima</div>
         <input class="field-input" id="inp-trans" placeholder="masalan: maqsadli, intiluvchi" autocomplete="off">
+      </div>
+      <div>
+        <div class="field-label">Synonym (ixtiyoriy)</div>
+        <input class="field-input" id="inp-syn" placeholder="masalan: driven, determined, aspiring" autocomplete="off">
       </div>
       <div>
         <div class="field-label">Misol jumla (ixtiyoriy)</div>
@@ -226,6 +233,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="flash-card" id="flash-card" onclick="revealFlash()">
         <div class="flash-word" id="flash-word"></div>
         <div class="flash-translation" id="flash-trans" style="display:none"></div>
+        <div class="flash-synonym" id="flash-syn-reveal" style="display:none"></div>
         <div class="flash-hint" id="flash-hint">Ko'rish uchun bosing</div>
       </div>
       <div class="flash-btns" id="flash-btns" style="display:none">
@@ -302,6 +310,7 @@ function showPage(name){
 function addWord(){
   const w=document.getElementById('inp-word').value.trim();
   const t=document.getElementById('inp-trans').value.trim();
+  const syn=document.getElementById('inp-syn').value.trim();
   const e=document.getElementById('inp-ex').value.trim();
   if(!w||!t)return;
   const words=getWords();
@@ -312,10 +321,11 @@ function addWord(){
     s.textContent='Bu so\'z allaqachon mavjud!';
     setTimeout(()=>s.style.display='none',2500);return;
   }
-  words.unshift({id:Date.now(),word:w,translation:t,example:e,date:today(),seen:0,correct:0});
+  words.unshift({id:Date.now(),word:w,translation:t,synonym:syn,example:e,date:today(),seen:0,correct:0});
   saveWords(words);
   document.getElementById('inp-word').value='';
   document.getElementById('inp-trans').value='';
+  document.getElementById('inp-syn').value='';
   document.getElementById('inp-ex').value='';
   const s=document.getElementById('add-success');
   s.style.display='block';s.style.background='rgba(106,247,160,0.1)';
@@ -338,6 +348,7 @@ function renderList(){
       <div>
         <div class="word-en">${w.word}</div>
         <div class="word-uz">${w.translation}</div>
+        ${w.synonym?`<div class="word-syn"><span>syn: </span>${w.synonym}</div>`:''}
         ${w.example?`<div class="word-ex">${w.example}</div>`:''}
       </div>
       <button class="del-btn" onclick="deleteWord(${w.id})">✕</button>
@@ -366,6 +377,7 @@ function renderStats(){
       <div>
         <div class="word-en">${w.word}</div>
         <div class="word-uz">${w.translation}</div>
+        ${w.synonym?`<div class="word-syn"><span>syn: </span>${w.synonym}</div>`:''}
       </div>
       <div style="font-size:0.7rem;color:var(--text3)">${w.date}</div>
     </div>
@@ -474,7 +486,7 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Enter'&&document.getElementById('typing-area').classList.contains('active')&&document.activeElement===document.getElementById('typing-inp')){
     checkTyping();
   }
-  if(e.key==='Enter'&&document.getElementById('page-add').classList.contains('active')&&(document.activeElement===document.getElementById('inp-trans')||document.activeElement===document.getElementById('inp-ex'))){
+  if(e.key==='Enter'&&document.getElementById('page-add').classList.contains('active')&&(document.activeElement===document.getElementById('inp-trans')||document.activeElement===document.getElementById('inp-ex')||document.activeElement===document.getElementById('inp-syn'))){
     addWord();
   }
 });
@@ -499,6 +511,8 @@ function showFlashCard(){
   document.getElementById('flash-word').textContent=cur.word;
   document.getElementById('flash-trans').style.display='none';
   document.getElementById('flash-trans').textContent=cur.translation+(cur.example?' — '+cur.example:'');
+  document.getElementById('flash-syn-reveal').style.display='none';
+  document.getElementById('flash-syn-reveal').textContent=cur.synonym?'syn: '+cur.synonym:'';
   document.getElementById('flash-hint').style.display='block';
   document.getElementById('flash-hint').textContent='Ko\'rish uchun bosing';
   document.getElementById('flash-btns').style.display='none';
@@ -509,6 +523,8 @@ function revealFlash(){
   if(flashRevealed)return;
   flashRevealed=true;
   document.getElementById('flash-trans').style.display='block';
+  const synEl=document.getElementById('flash-syn-reveal');
+  if(synEl.textContent)synEl.style.display='block';
   document.getElementById('flash-hint').textContent='Qanday? Quyidagi tugmani bosing';
   document.getElementById('flash-btns').style.display='grid';
 }
