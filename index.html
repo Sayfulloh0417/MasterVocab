@@ -23,273 +23,183 @@
     --card: #16161f;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  h1,h2,h3,.logo { font-family: 'Syne', sans-serif; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+  h1,h2,h3,.logo { font-family:'Syne',sans-serif; }
 
-  /* NAV */
   nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    position: sticky; top:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 20px; background:var(--surface);
+    border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:100;
   }
-  .logo { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .logo { font-size:1.2rem; font-weight:800; color:var(--accent); }
   .nav-tabs { display:flex; gap:4px; }
   .nav-tab {
-    background: none; border: none; color: var(--text2);
-    padding: 8px 12px; border-radius: 10px;
-    cursor: pointer; font-size: 0.78rem;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s;
+    background:none; border:none; color:var(--text2);
+    padding:8px 11px; border-radius:10px; cursor:pointer;
+    font-size:0.78rem; font-family:'DM Sans',sans-serif; transition:all 0.2s;
   }
-  .nav-tab.active { background: var(--accent); color: #fff; }
-  .nav-tab:hover:not(.active) { background: var(--surface2); color: var(--text); }
+  .nav-tab.active { background:var(--accent); color:#fff; }
+  .nav-tab:hover:not(.active) { background:var(--surface2); color:var(--text); }
 
-  /* PAGES */
-  .page { display:none; padding: 20px; max-width: 600px; margin: 0 auto; }
+  .page { display:none; padding:20px; max-width:600px; margin:0 auto; }
   .page.active { display:block; }
 
-  /* CARDS */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
-  }
-  .card h3 { font-size: 1rem; margin-bottom: 12px; color: var(--text2); }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:16px; }
+  .card h3 { font-size:1rem; margin-bottom:12px; color:var(--text2); }
 
-  /* INPUTS */
   input, textarea {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-    outline: none;
-    transition: border 0.2s;
+    width:100%; background:var(--surface2); border:1px solid var(--border);
+    border-radius:10px; padding:12px 14px; color:var(--text);
+    font-family:'DM Sans',sans-serif; font-size:0.95rem;
+    margin-bottom:10px; outline:none; transition:border 0.2s;
   }
-  input:focus, textarea:focus { border-color: var(--accent); }
-  input::placeholder, textarea::placeholder { color: var(--text2); }
+  input:focus { border-color:var(--accent); }
+  input::placeholder { color:var(--text2); }
 
-  /* BUTTONS */
-  .btn {
-    padding: 12px 24px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-  }
-  .btn-primary { background: var(--accent); color: #fff; width: 100%; }
-  .btn-primary:hover { background: #5a52e0; transform: translateY(-1px); }
-  .btn-danger { background: var(--accent2); color: #fff; padding: 8px 16px; font-size:0.82rem; }
-  .btn-success { background: var(--accent3); color: #000; padding: 8px 16px; font-size:0.82rem; }
-  .btn-outline {
-    background: none; border: 1px solid var(--border);
-    color: var(--text2); padding: 8px 16px; font-size:0.82rem;
-  }
+  .btn { padding:12px 24px; border-radius:12px; border:none; cursor:pointer; font-family:'Syne',sans-serif; font-weight:600; font-size:0.9rem; transition:all 0.2s; }
+  .btn-primary { background:var(--accent); color:#fff; width:100%; }
+  .btn-primary:hover { background:#5a52e0; transform:translateY(-1px); }
+  .btn-danger { background:var(--accent2); color:#fff; padding:8px 16px; font-size:0.82rem; }
+  .btn-success { background:var(--accent3); color:#000; padding:8px 16px; font-size:0.82rem; }
+  .btn-outline { background:none; border:1px solid var(--border); color:var(--text2); padding:8px 16px; font-size:0.82rem; }
 
   /* STATS */
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-  .stat-box {
-    background: var(--surface2);
-    border-radius: 14px;
-    padding: 16px;
-    text-align: center;
-  }
-  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); }
-  .stat-label { font-size: 0.78rem; color: var(--text2); margin-top: 4px; }
+  .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+  .stat-box { background:var(--surface2); border-radius:14px; padding:16px; text-align:center; }
+  .stat-num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--accent); }
+  .stat-label { font-size:0.78rem; color:var(--text2); margin-top:4px; }
 
   /* WORD LIST */
-  .word-item {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .word-item:hover { border-color: var(--accent); transform: translateX(3px); }
-  .word-eng { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
-  .word-uz { color: var(--text2); font-size: 0.88rem; margin-top: 3px; }
-  .word-syn { color: #f9ca24; font-size: 0.8rem; margin-top: 3px; }
-  .word-ex { color: var(--text2); font-size: 0.8rem; font-style: italic; margin-top: 3px; }
+  .word-item { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; cursor:pointer; transition:all 0.2s; }
+  .word-item:hover { border-color:var(--accent); transform:translateX(3px); }
+  .word-eng { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; }
+  .word-uz { color:var(--text2); font-size:0.88rem; margin-top:3px; }
+  .word-syn { color:#f9ca24; font-size:0.8rem; margin-top:3px; }
+  .word-ex { color:var(--text2); font-size:0.8rem; font-style:italic; margin-top:3px; }
 
   /* MODAL */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7); z-index: 200;
-    align-items: center; justify-content: center;
-    padding: 20px;
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:center; justify-content:center; padding:20px; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:24px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; }
+  .modal h2 { font-size:1.2rem; margin-bottom:16px; }
+  .modal-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+
+  /* GAMES HUB */
+  .games-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+  .game-card {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:16px; padding:20px 16px; text-align:center;
+    cursor:pointer; transition:all 0.25s;
   }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px;
-    width: 100%; max-width: 480px;
-    max-height: 90vh; overflow-y: auto;
-  }
-  .modal h2 { font-size: 1.2rem; margin-bottom: 16px; }
-  .modal-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .game-card:hover, .game-card.active-game { border-color:var(--accent); background:rgba(108,99,255,0.12); }
+  .game-card .game-icon { font-size:2rem; margin-bottom:8px; }
+  .game-card .game-title { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; }
+  .game-card .game-desc { color:var(--text2); font-size:0.75rem; margin-top:4px; }
 
   /* QUIZ */
   .quiz-word {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    text-align: center;
-    padding: 30px 20px;
-    color: var(--accent);
+    font-family:'Syne',sans-serif; font-size:1.9rem; font-weight:800;
+    text-align:center; padding:24px 16px; color:var(--accent);
+    word-break:break-word; line-height:1.2;
   }
-  .quiz-hint { text-align:center; color: var(--text2); font-size:0.85rem; margin-bottom: 20px; }
-  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .quiz-hint { text-align:center; color:var(--text2); font-size:0.85rem; margin-bottom:20px; }
+  .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .quiz-opt {
-    background: var(--surface2);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-align: center;
-    transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text);
+    background:var(--surface2); border:2px solid var(--border);
+    border-radius:12px; padding:14px 10px; cursor:pointer;
+    font-size:0.88rem; text-align:center; transition:all 0.2s;
+    font-family:'DM Sans',sans-serif; color:var(--text);
+    word-break:break-word; line-height:1.3;
   }
-  .quiz-opt:hover { border-color: var(--accent); }
-  .quiz-opt.correct { border-color: var(--accent3); background: rgba(67,233,123,0.15); color: var(--accent3); }
-  .quiz-opt.wrong { border-color: var(--accent2); background: rgba(255,101,132,0.15); color: var(--accent2); }
-  .quiz-result { text-align:center; padding: 20px; }
+  .quiz-opt:hover { border-color:var(--accent); }
+  .quiz-opt.correct { border-color:var(--accent3); background:rgba(67,233,123,0.15); color:var(--accent3); }
+  .quiz-opt.wrong { border-color:var(--accent2); background:rgba(255,101,132,0.15); color:var(--accent2); }
+  .quiz-result { text-align:center; padding:20px; }
   .quiz-result .score { font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; color:var(--accent); }
-  .quiz-type-toggle {
-    display: flex; gap: 8px; margin-bottom: 16px;
-  }
+
+  .quiz-type-toggle { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
   .quiz-type-btn {
-    flex:1; padding:10px; border-radius:10px; border: 1px solid var(--border);
-    background: var(--surface2); color: var(--text2); cursor:pointer;
-    font-family:'DM Sans',sans-serif; font-size:0.85rem; transition: all 0.2s;
+    flex:1; padding:9px 8px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface2); color:var(--text2); cursor:pointer;
+    font-family:'DM Sans',sans-serif; font-size:0.78rem; transition:all 0.2s;
+    min-width:0; text-align:center;
   }
-  .quiz-type-btn.active { background: var(--accent); color:#fff; border-color: var(--accent); }
+  .quiz-type-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+  .quiz-session-info {
+    text-align:center; background:var(--surface2);
+    border-radius:12px; padding:10px; margin-bottom:12px;
+    font-size:0.82rem; color:var(--text2);
+  }
+  .quiz-session-info span { color:var(--accent); font-weight:700; }
 
   /* FLASHCARD */
-  .flashcard-wrap { perspective: 1000px; }
-  .flashcard {
-    width: 100%; min-height: 200px;
-    position: relative; cursor: pointer;
-    transform-style: preserve-3d;
-    transition: transform 0.5s;
-    border-radius: 16px;
-  }
-  .flashcard.flipped { transform: rotateY(180deg); }
+  .flashcard-wrap { perspective:1000px; margin-top:16px; }
+  .flashcard { width:100%; min-height:220px; position:relative; cursor:pointer; transform-style:preserve-3d; transition:transform 0.5s; border-radius:16px; }
+  .flashcard.flipped { transform:rotateY(180deg); }
   .flashcard-front, .flashcard-back {
-    position: absolute; inset: 0;
-    backface-visibility: hidden;
-    border-radius: 16px;
-    display: flex; flex-direction:column;
-    align-items: center; justify-content: center;
-    padding: 30px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:16px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:30px; background:var(--surface2); border:1px solid var(--border);
   }
-  .flashcard-back { transform: rotateY(180deg); background: var(--surface); }
-  .fc-word { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--accent); }
-  .fc-trans { font-size:1.4rem; font-weight:500; }
-  .fc-syn { color: #f9ca24; font-size:0.9rem; margin-top:8px; }
-  .fc-hint { color:var(--text2); font-size:0.8rem; margin-top:10px; }
+  .flashcard-back { transform:rotateY(180deg); background:var(--surface); }
+  .fc-word { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--accent); text-align:center; word-break:break-word; }
+  .fc-trans { font-size:1.4rem; font-weight:500; text-align:center; }
+  .fc-syn { color:#f9ca24; font-size:0.9rem; margin-top:8px; text-align:center; }
+  .fc-hint { color:var(--text2); font-size:0.8rem; margin-top:10px; text-align:center; }
   .fc-nav { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
-  .fc-nav button {
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--text); padding: 10px 20px; border-radius:10px;
-    cursor:pointer; font-size:0.9rem;
-  }
-  .fc-counter { color: var(--text2); font-size:0.85rem; }
+  .fc-nav button { background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:10px 20px; border-radius:10px; cursor:pointer; font-size:0.9rem; }
+  .fc-counter { color:var(--text2); font-size:0.85rem; }
 
-  /* NOTIFICATION BANNER */
-  .notif-banner {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 16px;
-    display: flex; align-items:center; gap:12px;
-  }
+  /* NOTIF */
+  .notif-banner { background:linear-gradient(135deg,#667eea,#764ba2); border-radius:14px; padding:16px; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
   .notif-banner .icon { font-size:1.8rem; }
   .notif-banner p { font-size:0.85rem; line-height:1.5; }
   .notif-banner strong { font-family:'Syne',sans-serif; }
-  .notif-banner button {
-    margin-top:8px; padding:8px 16px; border-radius:8px;
-    border:none; background:#fff; color:#764ba2;
-    font-weight:700; cursor:pointer; font-size:0.82rem;
-  }
+  .notif-banner button { margin-top:8px; padding:8px 16px; border-radius:8px; border:none; background:#fff; color:#764ba2; font-weight:700; cursor:pointer; font-size:0.82rem; }
 
-  /* EMPTY STATE */
-  .empty {
-    text-align:center; padding: 40px 20px; color: var(--text2);
-  }
+  .empty { text-align:center; padding:40px 20px; color:var(--text2); }
   .empty .emoji { font-size:3rem; margin-bottom:12px; }
 
-  /* SEARCH */
   .search-wrap { position:relative; margin-bottom:16px; }
   .search-wrap input { margin-bottom:0; padding-left:40px; }
   .search-icon { position:absolute; left:13px; top:13px; color:var(--text2); }
 
-  /* TOAST */
-  .toast {
-    position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(100px);
-    background: var(--accent); color:#fff; padding:10px 20px;
-    border-radius:30px; font-size:0.88rem; z-index:999;
-    transition: transform 0.3s; white-space:nowrap;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--accent); color:#fff; padding:10px 20px; border-radius:30px; font-size:0.88rem; z-index:999; transition:transform 0.3s; white-space:nowrap; }
+  .toast.show { transform:translateX(-50%) translateY(0); }
 
-  /* PROGRESS BAR */
-  .progress-bar-wrap { background: var(--border); border-radius:99px; height:6px; margin:8px 0; }
-  .progress-bar { background: var(--accent); border-radius:99px; height:6px; transition:width 0.4s; }
+  .progress-bar-wrap { background:var(--border); border-radius:99px; height:6px; margin:8px 0; }
+  .progress-bar { background:var(--accent); border-radius:99px; height:6px; transition:width 0.4s; }
 
-  @media (max-width: 400px) {
-    .quiz-word { font-size:1.7rem; }
+  .back-btn { background:none; border:none; color:var(--text2); cursor:pointer; font-size:0.85rem; margin-bottom:16px; padding:4px 0; display:flex; align-items:center; gap:6px; }
+  .back-btn:hover { color:var(--text); }
+
+  @media (max-width:400px) {
+    .quiz-word { font-size:1.5rem; }
     .quiz-options { grid-template-columns:1fr; }
     .stats-grid { grid-template-columns:1fr; }
+    .games-grid { grid-template-columns:1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- NAV -->
 <nav>
   <div class="logo">📚 MasterVocab</div>
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('add')">＋ Add</button>
-    <button class="nav-tab" onclick="showPage('list')">List</button>
-    <button class="nav-tab" onclick="showPage('quiz')">Quiz</button>
-    <button class="nav-tab" onclick="showPage('flash')">Cards</button>
-    <button class="nav-tab" onclick="showPage('stats')">Stats</button>
+    <button class="nav-tab active" onclick="showPage('add',this)">＋ Add</button>
+    <button class="nav-tab" onclick="showPage('list',this)">List</button>
+    <button class="nav-tab" onclick="showPage('games',this)">Games</button>
+    <button class="nav-tab" onclick="showPage('stats',this)">Stats</button>
   </div>
 </nav>
 
-<!-- PAGE: ADD -->
+<!-- ADD -->
 <div class="page active" id="page-add">
-  <div class="card" style="margin-top:16px">
+  <div class="card" style="margin-top:24px">
     <h3>✨ Add New Word</h3>
     <input type="text" id="inp-eng" placeholder="English word" />
     <input type="text" id="inp-uz" placeholder="O'zbek tarjimasi" />
@@ -300,7 +210,7 @@
   <div id="notif-section"></div>
 </div>
 
-<!-- PAGE: LIST -->
+<!-- LIST -->
 <div class="page" id="page-list">
   <div style="margin-top:16px" class="search-wrap">
     <span class="search-icon">🔍</span>
@@ -309,28 +219,43 @@
   <div id="word-list"></div>
 </div>
 
-<!-- PAGE: QUIZ -->
-<div class="page" id="page-quiz">
-  <div style="margin-top:16px">
-    <div class="quiz-type-toggle">
-      <button class="quiz-type-btn active" id="qtype-en" onclick="setQuizType('en-uz')">🇬🇧 English → Uzbek</button>
-      <button class="quiz-type-btn" id="qtype-uz" onclick="setQuizType('uz-en')">🇺🇿 Uzbek → English</button>
+<!-- GAMES HUB -->
+<div class="page" id="page-games">
+  <div style="margin-top:24px">
+    <div id="games-hub">
+      <div class="games-grid">
+        <div class="game-card" onclick="openGame('quiz-enuz')">
+          <div class="game-icon">🇬🇧</div>
+          <div class="game-title">EN → UZ</div>
+          <div class="game-desc">English ko'rib, uzbekcha tanla</div>
+        </div>
+        <div class="game-card" onclick="openGame('quiz-uzen')">
+          <div class="game-icon">🇺🇿</div>
+          <div class="game-title">UZ → EN</div>
+          <div class="game-desc">Uzbekcha ko'rib, englishcha tanla</div>
+        </div>
+        <div class="game-card" onclick="openGame('quiz-syn')">
+          <div class="game-icon">🔗</div>
+          <div class="game-title">Synonym</div>
+          <div class="game-desc">So'zning synonymini top</div>
+        </div>
+        <div class="game-card" onclick="openGame('flash')">
+          <div class="game-icon">🃏</div>
+          <div class="game-title">Flashcards</div>
+          <div class="game-desc">Kartochkalar bilan takrorla</div>
+        </div>
+      </div>
     </div>
-    <div id="quiz-area"></div>
+    <div id="game-area" style="display:none"></div>
   </div>
 </div>
 
-<!-- PAGE: FLASHCARDS -->
-<div class="page" id="page-flash">
-  <div style="margin-top:16px" id="flash-area"></div>
-</div>
-
-<!-- PAGE: STATS -->
+<!-- STATS -->
 <div class="page" id="page-stats">
   <div style="margin-top:16px" id="stats-area"></div>
 </div>
 
-<!-- MODAL: EDIT WORD -->
+<!-- EDIT MODAL -->
 <div class="modal-overlay" id="edit-modal">
   <div class="modal">
     <h2>✏️ Edit Word</h2>
@@ -347,45 +272,45 @@
 </div>
 
 <script>
-// ===================== DATA =====================
+// ============ DATA ============
 let words = JSON.parse(localStorage.getItem('mv_words') || '[]');
-let quizType = 'en-uz';
-let quizState = null;
-let quizScore = 0;
-let quizIndex = 0;
-let quizShuffled = [];
 let editingIndex = -1;
 let fcIndex = 0;
 let fcFlipped = false;
+
+// Quiz state
+let quizMode = '';
+let quizPool = [];
+let quizIndex = 0;
+let quizScore = 0;
+let quizSessionKey = '';
 
 function save() {
   localStorage.setItem('mv_words', JSON.stringify(words));
   localStorage.setItem('mv_last_visit', Date.now().toString());
 }
 
-// ===================== PAGES =====================
-function showPage(name) {
+// ============ PAGES ============
+function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
   if (name === 'list') renderList('');
-  if (name === 'quiz') startQuiz();
-  if (name === 'flash') renderFlash();
   if (name === 'stats') renderStats();
   if (name === 'add') renderNotifSection();
-  // track visit for notification
+  if (name === 'games') showGamesHub();
   localStorage.setItem('mv_last_visit', Date.now().toString());
 }
 
-// ===================== ADD WORD =====================
+// ============ ADD ============
 function addWord() {
   const eng = document.getElementById('inp-eng').value.trim();
   const uz = document.getElementById('inp-uz').value.trim();
   const syn = document.getElementById('inp-syn').value.trim();
   const ex = document.getElementById('inp-ex').value.trim();
   if (!eng || !uz) { showToast('⚠️ Word and translation required!'); return; }
-  words.unshift({ eng, uz, syn, ex, date: Date.now(), quizCount: 0, correctCount: 0 });
+  words.unshift({ eng, uz, syn, ex, date: Date.now(), quizCount:0, correctCount:0 });
   save();
   document.getElementById('inp-eng').value = '';
   document.getElementById('inp-uz').value = '';
@@ -404,7 +329,7 @@ function addWord() {
   });
 });
 
-// ===================== LIST =====================
+// ============ LIST ============
 function renderList(search) {
   const container = document.getElementById('word-list');
   const filtered = words.filter(w =>
@@ -413,10 +338,10 @@ function renderList(search) {
     w.uz.toLowerCase().includes(search.toLowerCase())
   );
   if (filtered.length === 0) {
-    container.innerHTML = `<div class="empty"><div class="emoji">📭</div><p>No words yet.<br>Add some from the Add tab!</p></div>`;
+    container.innerHTML = `<div class="empty"><div class="emoji">📭</div><p>No words yet.</p></div>`;
     return;
   }
-  container.innerHTML = filtered.map((w, i) => {
+  container.innerHTML = filtered.map(w => {
     const realIdx = words.indexOf(w);
     return `<div class="word-item" onclick="openEdit(${realIdx})">
       <div class="word-eng">${w.eng}</div>
@@ -427,7 +352,7 @@ function renderList(search) {
   }).join('');
 }
 
-// ===================== EDIT / DELETE =====================
+// ============ EDIT ============
 function openEdit(idx) {
   editingIndex = idx;
   const w = words[idx];
@@ -437,127 +362,213 @@ function openEdit(idx) {
   document.getElementById('edit-ex').value = w.ex || '';
   document.getElementById('edit-modal').classList.add('open');
 }
-
 function closeModal() {
   document.getElementById('edit-modal').classList.remove('open');
   editingIndex = -1;
 }
-
 function saveEdit() {
   if (editingIndex < 0) return;
   words[editingIndex].eng = document.getElementById('edit-eng').value.trim();
   words[editingIndex].uz = document.getElementById('edit-uz').value.trim();
   words[editingIndex].syn = document.getElementById('edit-syn').value.trim();
   words[editingIndex].ex = document.getElementById('edit-ex').value.trim();
-  save();
-  closeModal();
-  renderList('');
-  showToast('✅ Saved!');
+  save(); closeModal(); renderList(''); showToast('✅ Saved!');
 }
-
 function deleteWord() {
   if (editingIndex < 0) return;
   words.splice(editingIndex, 1);
-  save();
-  closeModal();
-  renderList('');
-  showToast('🗑 Deleted!');
+  save(); closeModal(); renderList(''); showToast('🗑 Deleted!');
 }
-
-// Close modal on overlay click
 document.getElementById('edit-modal').addEventListener('click', e => {
   if (e.target === e.currentTarget) closeModal();
 });
 
-// ===================== QUIZ =====================
-function setQuizType(type) {
-  quizType = type;
-  document.getElementById('qtype-en').classList.toggle('active', type === 'en-uz');
-  document.getElementById('qtype-uz').classList.toggle('active', type === 'uz-en');
-  startQuiz();
+// ============ GAMES HUB ============
+function showGamesHub() {
+  document.getElementById('games-hub').style.display = 'block';
+  document.getElementById('game-area').style.display = 'none';
 }
 
-function startQuiz() {
+function openGame(mode) {
+  document.getElementById('games-hub').style.display = 'none';
+  document.getElementById('game-area').style.display = 'block';
+  quizMode = mode;
+  if (mode === 'flash') { renderFlash(); return; }
+  startQuiz(mode);
+}
+
+// ============ QUIZ - 50 SO'ZLIK SESSION ============
+const QUIZ_BATCH = 50;
+
+function getSessionPool(mode) {
+  // Har session uchun key: mode + soat (har 1 soatda yangi pool)
+  const hourKey = Math.floor(Date.now() / (1000 * 60 * 60));
+  const key = `mv_qpool_${mode}_${hourKey}`;
+  const prevKey = `mv_qpool_key_${mode}`;
+  const storedKey = localStorage.getItem(prevKey);
+
+  // Yangi soat → yangi pool
+  if (storedKey !== String(hourKey)) {
+    // Shuffled indices saqlash
+    const indices = [...Array(words.length).keys()].sort(() => Math.random() - 0.5);
+    const batch = indices.slice(0, Math.min(QUIZ_BATCH, words.length));
+    localStorage.setItem(key, JSON.stringify(batch));
+    localStorage.setItem(prevKey, String(hourKey));
+    return batch;
+  }
+
+  const stored = localStorage.getItem(key);
+  if (stored) return JSON.parse(stored);
+  const indices = [...Array(words.length).keys()].sort(() => Math.random() - 0.5);
+  const batch = indices.slice(0, Math.min(QUIZ_BATCH, words.length));
+  localStorage.setItem(key, JSON.stringify(batch));
+  return batch;
+}
+
+function startQuiz(mode) {
   if (words.length < 4) {
-    document.getElementById('quiz-area').innerHTML = `<div class="empty"><div class="emoji">🧩</div><p>Add at least 4 words to start the quiz!</p></div>`;
+    document.getElementById('game-area').innerHTML = `
+      <button class="back-btn" onclick="showGamesHub()">← Back</button>
+      <div class="empty"><div class="emoji">🧩</div><p>Add at least 4 words to play!</p></div>`;
     return;
   }
-  quizShuffled = [...words].sort(() => Math.random() - 0.5);
+  // Synonym quiz uchun kamida 4ta synonym kerak
+  if (mode === 'quiz-syn') {
+    const hasSyn = words.filter(w => w.syn && w.syn.trim());
+    if (hasSyn.length < 4) {
+      document.getElementById('game-area').innerHTML = `
+        <button class="back-btn" onclick="showGamesHub()">← Back</button>
+        <div class="empty"><div class="emoji">🔗</div><p>Add synonyms to at least 4 words to play this mode!</p></div>`;
+      return;
+    }
+  }
+
+  const poolIndices = getSessionPool(mode);
+  let pool = poolIndices.map(i => words[i]).filter(Boolean);
+
+  // Synonym mode uchun faqat synonymli so'zlar
+  if (mode === 'quiz-syn') {
+    pool = pool.filter(w => w.syn && w.syn.trim());
+    if (pool.length < 4) pool = words.filter(w => w.syn && w.syn.trim()).slice(0, QUIZ_BATCH);
+  }
+
+  quizPool = pool;
   quizIndex = 0;
   quizScore = 0;
-  showQuestion();
+  showQuizQuestion();
 }
 
-function showQuestion() {
-  if (quizIndex >= quizShuffled.length) {
-    showResult();
-    return;
+function showQuizQuestion() {
+  if (quizIndex >= quizPool.length) { showQuizResult(); return; }
+
+  const current = quizPool[quizIndex];
+  const area = document.getElementById('game-area');
+
+  // Soat hisoblagich
+  const hourKey = Math.floor(Date.now() / (1000 * 60 * 60));
+  const nextReset = new Date((hourKey + 1) * 1000 * 60 * 60);
+  const minsLeft = Math.round((nextReset - Date.now()) / 60000);
+
+  let questionText = '';
+  let hintText = '';
+  let options = [];
+  let correctAnswer = '';
+
+  if (quizMode === 'quiz-enuz') {
+    questionText = current.eng;
+    hintText = 'Select the Uzbek translation';
+    correctAnswer = current.uz;
+    const others = words.filter(w => w !== current && w.uz !== current.uz).sort(() => Math.random()-0.5).slice(0,3);
+    options = [...others.map(o=>o.uz), current.uz].sort(()=>Math.random()-0.5);
+  } else if (quizMode === 'quiz-uzen') {
+    questionText = current.uz;
+    hintText = 'Select the English word';
+    correctAnswer = current.eng;
+    const others = words.filter(w => w !== current && w.eng !== current.eng).sort(() => Math.random()-0.5).slice(0,3);
+    options = [...others.map(o=>o.eng), current.eng].sort(()=>Math.random()-0.5);
+  } else if (quizMode === 'quiz-syn') {
+    // Synonym quiz: so'zni ko'rsat, 4ta english worddan synonymini top
+    questionText = current.eng;
+    hintText = 'Which word is a synonym?';
+    // current.syn dan birinchi synonymni ol
+    const synWords = current.syn.split(',').map(s=>s.trim()).filter(Boolean);
+    correctAnswer = synWords[0];
+    // 3ta boshqa so'z (non-synonym)
+    const others = words
+      .filter(w => w !== current && w.eng.toLowerCase() !== correctAnswer.toLowerCase())
+      .sort(() => Math.random()-0.5)
+      .slice(0,3)
+      .map(o => o.eng);
+    options = [...others, correctAnswer].sort(()=>Math.random()-0.5);
   }
-  const current = quizShuffled[quizIndex];
-  const others = words.filter(w => w !== current).sort(() => Math.random() - 0.5).slice(0, 3);
-  const options = [...others, current].sort(() => Math.random() - 0.5);
 
-  const question = quizType === 'en-uz' ? current.eng : current.uz;
-  const correctAnswer = quizType === 'en-uz' ? current.uz : current.eng;
-
-  document.getElementById('quiz-area').innerHTML = `
+  area.innerHTML = `
+    <button class="back-btn" onclick="showGamesHub()">← Back</button>
+    <div class="quiz-session-info">
+      Session: <span>${quizIndex+1}/${quizPool.length}</span> · Score: <span>${quizScore}</span> · Refreshes in <span>${minsLeft}m</span>
+    </div>
     <div class="card">
-      <div style="text-align:center; color:var(--text2); font-size:0.8rem; margin-bottom:4px">
-        ${quizIndex + 1} / ${quizShuffled.length}
-      </div>
       <div class="progress-bar-wrap">
-        <div class="progress-bar" style="width:${((quizIndex)/quizShuffled.length)*100}%"></div>
+        <div class="progress-bar" style="width:${(quizIndex/quizPool.length)*100}%"></div>
       </div>
-      <div class="quiz-word">${question}</div>
-      <div class="quiz-hint">${quizType === 'en-uz' ? 'Select the Uzbek translation' : 'Select the English word'}</div>
-      <div class="quiz-options" id="quiz-opts">
-        ${options.map(o => {
-          const ans = quizType === 'en-uz' ? o.uz : o.eng;
-          return `<button class="quiz-opt" onclick="checkAnswer(this,'${ans.replace(/'/g,"\\'")}','${correctAnswer.replace(/'/g,"\\'")}',${options.indexOf(o)})">${ans}</button>`;
-        }).join('')}
+      <div class="quiz-word">${questionText}</div>
+      <div class="quiz-hint">${hintText}</div>
+      <div class="quiz-options">
+        ${options.map(opt => `
+          <button class="quiz-opt" onclick="checkAnswer(this,'${opt.replace(/'/g,"\\'")}','${correctAnswer.replace(/'/g,"\\'")}')">
+            ${opt}
+          </button>`).join('')}
       </div>
     </div>`;
 }
 
-function checkAnswer(btn, selected, correct, idx) {
-  const opts = document.querySelectorAll('.quiz-opt');
-  opts.forEach(o => o.onclick = null);
+function checkAnswer(btn, selected, correct) {
+  document.querySelectorAll('.quiz-opt').forEach(o => o.onclick = null);
   if (selected === correct) {
     btn.classList.add('correct');
     quizScore++;
-    quizShuffled[quizIndex].correctCount = (quizShuffled[quizIndex].correctCount || 0) + 1;
+    if (quizPool[quizIndex]) quizPool[quizIndex].correctCount = (quizPool[quizIndex].correctCount||0)+1;
   } else {
     btn.classList.add('wrong');
-    opts.forEach(o => { if (o.textContent.trim() === correct) o.classList.add('correct'); });
+    document.querySelectorAll('.quiz-opt').forEach(o => {
+      if (o.textContent.trim() === correct) o.classList.add('correct');
+    });
   }
-  quizShuffled[quizIndex].quizCount = (quizShuffled[quizIndex].quizCount || 0) + 1;
+  if (quizPool[quizIndex]) quizPool[quizIndex].quizCount = (quizPool[quizIndex].quizCount||0)+1;
   save();
-  setTimeout(() => { quizIndex++; showQuestion(); }, 1000);
+  setTimeout(() => { quizIndex++; showQuizQuestion(); }, 900);
 }
 
-function showResult() {
-  const pct = Math.round((quizScore / quizShuffled.length) * 100);
-  const emoji = pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '📚';
-  document.getElementById('quiz-area').innerHTML = `
+function showQuizResult() {
+  const pct = Math.round((quizScore/quizPool.length)*100);
+  const emoji = pct>=80?'🎉':pct>=50?'👍':'📚';
+  document.getElementById('game-area').innerHTML = `
+    <button class="back-btn" onclick="showGamesHub()">← Back</button>
     <div class="card quiz-result">
       <div style="font-size:3rem">${emoji}</div>
-      <div class="score">${quizScore}/${quizShuffled.length}</div>
-      <p style="color:var(--text2); margin:8px 0 20px">${pct}% correct</p>
-      <button class="btn btn-primary" onclick="startQuiz()">Try Again →</button>
+      <div class="score">${quizScore}/${quizPool.length}</div>
+      <p style="color:var(--text2);margin:8px 0 20px">${pct}% correct</p>
+      <p style="color:var(--text2);font-size:0.82rem;margin-bottom:20px">
+        Come back in an hour for a new set of words!
+      </p>
+      <button class="btn btn-primary" onclick="startQuiz('${quizMode}')">Play Again →</button>
     </div>`;
   localStorage.setItem('mv_last_review', Date.now().toString());
 }
 
-// ===================== FLASHCARDS =====================
+// ============ FLASHCARDS ============
 function renderFlash() {
   if (words.length === 0) {
-    document.getElementById('flash-area').innerHTML = `<div class="empty"><div class="emoji">🃏</div><p>No words yet!</p></div>`;
+    document.getElementById('game-area').innerHTML = `
+      <button class="back-btn" onclick="showGamesHub()">← Back</button>
+      <div class="empty"><div class="emoji">🃏</div><p>No words yet!</p></div>`;
     return;
   }
   if (fcIndex >= words.length) fcIndex = 0;
   fcFlipped = false;
   const w = words[fcIndex];
-  document.getElementById('flash-area').innerHTML = `
+  document.getElementById('game-area').innerHTML = `
+    <button class="back-btn" onclick="showGamesHub()">← Back</button>
     <div class="flashcard-wrap">
       <div class="flashcard" id="fc-card" onclick="flipCard()">
         <div class="flashcard-front">
@@ -571,7 +582,7 @@ function renderFlash() {
         </div>
       </div>
     </div>
-    <div class="fc-nav" style="margin-top:16px">
+    <div class="fc-nav">
       <button onclick="fcMove(-1)">← Prev</button>
       <span class="fc-counter">${fcIndex+1} / ${words.length}</span>
       <button onclick="fcMove(1)">Next →</button>
@@ -580,22 +591,22 @@ function renderFlash() {
 
 function flipCard() {
   fcFlipped = !fcFlipped;
-  document.getElementById('fc-card').classList.toggle('flipped', fcFlipped);
+  const card = document.getElementById('fc-card');
+  if (card) card.classList.toggle('flipped', fcFlipped);
 }
-
 function fcMove(dir) {
   fcIndex = (fcIndex + dir + words.length) % words.length;
   renderFlash();
 }
 
-// ===================== STATS =====================
+// ============ STATS ============
 function renderStats() {
   const total = words.length;
-  const reviewed = words.filter(w => w.quizCount > 0).length;
+  const reviewed = words.filter(w=>w.quizCount>0).length;
   const today = new Date().toDateString();
-  const todayAdded = words.filter(w => new Date(w.date).toDateString() === today).length;
-  const accuracy = words.reduce((a,w) => a + (w.quizCount > 0 ? w.correctCount/w.quizCount : 0), 0);
-  const avgAcc = total > 0 ? Math.round((accuracy / total) * 100) : 0;
+  const todayAdded = words.filter(w=>new Date(w.date).toDateString()===today).length;
+  const accuracy = words.reduce((a,w)=>a+(w.quizCount>0?w.correctCount/w.quizCount:0),0);
+  const avgAcc = total>0 ? Math.round((accuracy/total)*100) : 0;
 
   document.getElementById('stats-area').innerHTML = `
     <div class="stats-grid">
@@ -606,146 +617,100 @@ function renderStats() {
     </div>
     <div class="card">
       <h3>📖 All Words</h3>
-      ${words.length === 0 ? '<p style="color:var(--text2)">No words yet.</p>' :
-        words.map(w => `
-          <div style="padding:10px 0; border-bottom:1px solid var(--border)">
-            <div style="font-weight:700">${w.eng} <span style="color:var(--text2); font-weight:400">— ${w.uz}</span></div>
-            ${w.syn ? `<div style="color:#f9ca24; font-size:0.8rem">≈ ${w.syn}</div>` : ''}
-            ${w.ex ? `<div style="color:var(--text2); font-size:0.8rem; font-style:italic">"${w.ex}"</div>` : ''}
+      ${words.length===0 ? '<p style="color:var(--text2)">No words yet.</p>' :
+        words.map(w=>`
+          <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+            <div style="font-weight:700">${w.eng} <span style="color:var(--text2);font-weight:400">— ${w.uz}</span></div>
+            ${w.syn?`<div style="color:#f9ca24;font-size:0.8rem">≈ ${w.syn}</div>`:''}
+            ${w.ex?`<div style="color:var(--text2);font-size:0.8rem;font-style:italic">"${w.ex}"</div>`:''}
           </div>`).join('')
       }
     </div>`;
 }
 
-// ===================== NOTIFICATIONS =====================
+// ============ NOTIFICATIONS ============
 function renderNotifSection() {
   const el = document.getElementById('notif-section');
-  if (!('Notification' in window) || !('serviceWorker' in navigator)) {
-    el.innerHTML = '';
-    return;
-  }
-  if (Notification.permission === 'granted') {
-    el.innerHTML = `<div class="notif-banner"><div class="icon">🔔</div><div><p><strong>Notifications ON</strong><br>Daily reminders at 8:00 AM are active.</p></div></div>`;
-  } else if (Notification.permission !== 'denied') {
-    el.innerHTML = `<div class="notif-banner"><div class="icon">🔔</div><div><p><strong>Enable Reminders</strong><br>Get daily notifications to practice your vocabulary.</p><button onclick="requestNotif()">Enable Notifications</button></div></div>`;
+  if (!('Notification' in window)||!('serviceWorker' in navigator)){el.innerHTML='';return;}
+  if (Notification.permission==='granted') {
+    el.innerHTML=`<div class="notif-banner"><div class="icon">🔔</div><div><p><strong>Notifications ON</strong><br>Daily reminders are active.</p></div></div>`;
+  } else if (Notification.permission!=='denied') {
+    el.innerHTML=`<div class="notif-banner"><div class="icon">🔔</div><div><p><strong>Enable Reminders</strong><br>Get daily notifications to practice.</p><button onclick="requestNotif()">Enable Notifications</button></div></div>`;
   }
 }
 
 async function requestNotif() {
   const perm = await Notification.requestPermission();
-  if (perm === 'granted') {
+  if (perm==='granted') {
     await registerSW();
     showToast('🔔 Notifications enabled!');
     renderNotifSection();
     scheduleChecks();
-  } else {
-    showToast('❌ Permission denied');
-  }
+  } else { showToast('❌ Permission denied'); }
 }
 
 async function registerSW() {
   if ('serviceWorker' in navigator) {
-    try {
-      await navigator.serviceWorker.register('/sw.js');
-    } catch(e) { console.log('SW error', e); }
+    try { await navigator.serviceWorker.register('/sw.js'); } catch(e) {}
   }
 }
 
-// ---- Notification Scheduling Logic ----
-// Uses localStorage to track state, checks every minute via setInterval
-function scheduleChecks() {
-  setInterval(checkNotifications, 60 * 1000);
-}
+function scheduleChecks() { setInterval(checkNotifications, 60*1000); }
 
 function checkNotifications() {
-  if (Notification.permission !== 'granted') return;
+  if (Notification.permission!=='granted') return;
   const now = new Date();
   const hour = now.getHours();
-  const min = now.getMinutes();
   const today = now.toDateString();
+  const lastAdd = parseInt(localStorage.getItem('mv_last_add')||'0');
+  const addedToday = new Date(lastAdd).toDateString()===today;
 
-  // --- Word reminder ---
-  const lastAdd = parseInt(localStorage.getItem('mv_last_add') || '0');
-  const lastAddDay = lastAdd ? new Date(lastAdd).toDateString() : null;
-  const addedToday = lastAddDay === today;
-  const wordNotifSent = localStorage.getItem('mv_word_notif_day');
-  const wordNotifDismissed = localStorage.getItem('mv_word_dismissed_day');
-
-  // Start at 8:00, every hour if not visited
-  if (!addedToday && wordNotifDismissed !== today) {
-    const lastVisit = parseInt(localStorage.getItem('mv_last_visit') || '0');
-    const visitedToday = new Date(lastVisit).toDateString() === today;
-    const lastWordNotifHour = parseInt(localStorage.getItem('mv_word_notif_hour') || '-1');
-
-    if (hour >= 8 && hour !== lastWordNotifHour) {
-      // Check: if visited within last 1 hour after a notification, stop for today
-      const notifSentTime = parseInt(localStorage.getItem('mv_word_notif_time') || '0');
-      const visitAfterNotif = lastVisit > notifSentTime && (lastVisit - notifSentTime) < 3600000;
-      if (visitAfterNotif) {
-        localStorage.setItem('mv_word_dismissed_day', today);
-        return;
-      }
-      sendLocalNotif(
-        "📚 MasterVocab",
-        "You haven't added a new word today! Keep building your vocabulary 🚀"
-      );
-      localStorage.setItem('mv_word_notif_hour', hour.toString());
-      localStorage.setItem('mv_word_notif_time', Date.now().toString());
+  if (!addedToday && localStorage.getItem('mv_word_dismissed_day')!==today) {
+    const lastVisit = parseInt(localStorage.getItem('mv_last_visit')||'0');
+    const lastHour = parseInt(localStorage.getItem('mv_word_notif_hour')||'-1');
+    if (hour>=8 && hour!==lastHour) {
+      const notifTime = parseInt(localStorage.getItem('mv_word_notif_time')||'0');
+      const visitedAfter = lastVisit>notifTime && (lastVisit-notifTime)<3600000;
+      if (visitedAfter) { localStorage.setItem('mv_word_dismissed_day',today); return; }
+      sendLocalNotif("📚 MasterVocab","You haven't added a new word today! Keep building your vocabulary 🚀");
+      localStorage.setItem('mv_word_notif_hour',hour.toString());
+      localStorage.setItem('mv_word_notif_time',Date.now().toString());
     }
   }
 
-  // --- Review reminder ---
-  const lastReview = parseInt(localStorage.getItem('mv_last_review') || '0');
-  const reviewedToday = new Date(lastReview).toDateString() === today;
-  const reviewNotifSent = localStorage.getItem('mv_review_notif_day');
-
-  if (!reviewedToday && reviewNotifSent !== today && hour >= 20 && min < 5) {
-    sendLocalNotif(
-      "🧠 MasterVocab",
-      "You haven't reviewed your words today! Take 2 minutes to practice 📖"
-    );
-    localStorage.setItem('mv_review_notif_day', today);
+  const lastReview = parseInt(localStorage.getItem('mv_last_review')||'0');
+  const reviewedToday = new Date(lastReview).toDateString()===today;
+  if (!reviewedToday && localStorage.getItem('mv_review_notif_day')!==today && hour>=20 && now.getMinutes()<5) {
+    sendLocalNotif("🧠 MasterVocab","You haven't reviewed your words today! Take 2 minutes to practice 📖");
+    localStorage.setItem('mv_review_notif_day',today);
   }
 }
 
-function sendLocalNotif(title, body) {
-  if (Notification.permission === 'granted') {
-    navigator.serviceWorker.ready.then(reg => {
-      reg.showNotification(title, {
-        body,
-        icon: '/icon.png',
-        badge: '/icon.png',
-        vibrate: [200, 100, 200]
-      });
-    }).catch(() => {
-      new Notification(title, { body });
-    });
-  }
+function sendLocalNotif(title,body) {
+  if (Notification.permission!=='granted') return;
+  navigator.serviceWorker.ready.then(reg=>{
+    reg.showNotification(title,{body,icon:'/icon.png',badge:'/icon.png',vibrate:[200,100,200]});
+  }).catch(()=>{ new Notification(title,{body}); });
 }
 
-// ===================== UTILS =====================
+// ============ UTILS ============
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-// ===================== INIT =====================
+// ============ INIT ============
 renderNotifSection();
-if (Notification.permission === 'granted') {
-  registerSW();
-  scheduleChecks();
-}
+if (Notification.permission==='granted') { registerSW(); scheduleChecks(); }
 
-// iPhone Home Screen install hint
-window.addEventListener('load', () => {
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const isStandalone = window.navigator.standalone;
-  if (isIOS && !isStandalone && !localStorage.getItem('mv_install_dismissed')) {
-    const banner = document.createElement('div');
-    banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#1c1c27;border-top:1px solid #2a2a3a;padding:14px 16px;z-index:300;font-size:0.82rem;color:#f0f0f5;display:flex;justify-content:space-between;align-items:center;';
-    banner.innerHTML = `<span>📲 <strong>Add to Home Screen</strong> for notifications (Share → Add to Home Screen)</span><button onclick="this.parentNode.remove();localStorage.setItem('mv_install_dismissed','1')" style="background:none;border:none;color:#6c63ff;font-size:1.2rem;cursor:pointer">✕</button>`;
+window.addEventListener('load',()=>{
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone=window.navigator.standalone;
+  if (isIOS&&!isStandalone&&!localStorage.getItem('mv_install_dismissed')) {
+    const banner=document.createElement('div');
+    banner.style.cssText='position:fixed;bottom:0;left:0;right:0;background:#1c1c27;border-top:1px solid #2a2a3a;padding:14px 16px;z-index:300;font-size:0.82rem;color:#f0f0f5;display:flex;justify-content:space-between;align-items:center;';
+    banner.innerHTML=`<span>📲 <strong>Add to Home Screen</strong> for notifications</span><button onclick="this.parentNode.remove();localStorage.setItem('mv_install_dismissed','1')" style="background:none;border:none;color:#6c63ff;font-size:1.2rem;cursor:pointer">✕</button>`;
     document.body.appendChild(banner);
   }
 });
