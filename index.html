@@ -64,13 +64,11 @@
   .btn-success { background:var(--accent3); color:#000; padding:8px 16px; font-size:0.82rem; }
   .btn-outline { background:none; border:1px solid var(--border); color:var(--text2); padding:8px 16px; font-size:0.82rem; }
 
-  /* STATS */
   .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
   .stat-box { background:var(--surface2); border-radius:14px; padding:16px; text-align:center; }
   .stat-num { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--accent); }
   .stat-label { font-size:0.78rem; color:var(--text2); margin-top:4px; }
 
-  /* WORD LIST */
   .word-item { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; cursor:pointer; transition:all 0.2s; }
   .word-item:hover { border-color:var(--accent); transform:translateX(3px); }
   .word-eng { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; }
@@ -78,14 +76,12 @@
   .word-syn { color:#f9ca24; font-size:0.8rem; margin-top:3px; }
   .word-ex { color:var(--text2); font-size:0.8rem; font-style:italic; margin-top:3px; }
 
-  /* MODAL */
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:center; justify-content:center; padding:20px; }
   .modal-overlay.open { display:flex; }
   .modal { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:24px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; }
   .modal h2 { font-size:1.2rem; margin-bottom:16px; }
   .modal-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
 
-  /* GAMES HUB */
   .games-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
   .game-card {
     background:var(--surface2); border:1px solid var(--border);
@@ -97,7 +93,6 @@
   .game-card .game-title { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; }
   .game-card .game-desc { color:var(--text2); font-size:0.75rem; margin-top:4px; }
 
-  /* QUIZ */
   .quiz-word {
     font-family:'Syne',sans-serif; font-size:1.9rem; font-weight:800;
     text-align:center; padding:24px 16px; color:var(--accent);
@@ -134,7 +129,6 @@
   }
   .quiz-session-info span { color:var(--accent); font-weight:700; }
 
-  /* FLASHCARD */
   .flashcard-wrap { perspective:1000px; margin-top:16px; }
   .flashcard { width:100%; min-height:220px; position:relative; cursor:pointer; transform-style:preserve-3d; transition:transform 0.5s; border-radius:16px; }
   .flashcard.flipped { transform:rotateY(180deg); }
@@ -152,7 +146,6 @@
   .fc-nav button { background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:10px 20px; border-radius:10px; cursor:pointer; font-size:0.9rem; }
   .fc-counter { color:var(--text2); font-size:0.85rem; }
 
-  /* NOTIF */
   .notif-banner { background:linear-gradient(135deg,#667eea,#764ba2); border-radius:14px; padding:16px; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
   .notif-banner .icon { font-size:1.8rem; }
   .notif-banner p { font-size:0.85rem; line-height:1.5; }
@@ -197,7 +190,7 @@
   </div>
 </nav>
 
-<!-- ADD -->
+<!-- ADD PAGE -->
 <div class="page active" id="page-add">
   <div class="card" style="margin-top:24px">
     <h3>✨ Add New Word</h3>
@@ -210,7 +203,7 @@
   <div id="notif-section"></div>
 </div>
 
-<!-- LIST -->
+<!-- LIST PAGE -->
 <div class="page" id="page-list">
   <div style="margin-top:16px" class="search-wrap">
     <span class="search-icon">🔍</span>
@@ -219,7 +212,7 @@
   <div id="word-list"></div>
 </div>
 
-<!-- GAMES HUB -->
+<!-- GAMES PAGE -->
 <div class="page" id="page-games">
   <div style="margin-top:24px">
     <div id="games-hub">
@@ -250,7 +243,7 @@
   </div>
 </div>
 
-<!-- STATS -->
+<!-- STATS PAGE -->
 <div class="page" id="page-stats">
   <div style="margin-top:16px" id="stats-area"></div>
 </div>
@@ -321,17 +314,21 @@ function addWord() {
 }
 
 ['inp-eng','inp-uz','inp-syn','inp-ex'].forEach((id, i, arr) => {
-  document.getElementById(id).addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      if (i < arr.length - 1) document.getElementById(arr[i+1]).focus();
-      else addWord();
-    }
-  });
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        if (i < arr.length - 1) document.getElementById(arr[i+1]).focus();
+        else addWord();
+      }
+    });
+  }
 });
 
 // ============ LIST ============
 function renderList(search) {
   const container = document.getElementById('word-list');
+  if (!container) return;
   const filtered = words.filter(w =>
     !search ||
     w.eng.toLowerCase().includes(search.toLowerCase()) ||
@@ -344,12 +341,22 @@ function renderList(search) {
   container.innerHTML = filtered.map(w => {
     const realIdx = words.indexOf(w);
     return `<div class="word-item" onclick="openEdit(${realIdx})">
-      <div class="word-eng">${w.eng}</div>
-      <div class="word-uz">🇺🇿 ${w.uz}</div>
-      ${w.syn ? `<div class="word-syn">≈ ${w.syn}</div>` : ''}
-      ${w.ex ? `<div class="word-ex">"${w.ex}"</div>` : ''}
+      <div class="word-eng">${escapeHtml(w.eng)}</div>
+      <div class="word-uz">🇺🇿 ${escapeHtml(w.uz)}</div>
+      ${w.syn ? `<div class="word-syn">≈ ${escapeHtml(w.syn)}</div>` : ''}
+      ${w.ex ? `<div class="word-ex">"${escapeHtml(w.ex)}"</div>` : ''}
     </div>`;
   }).join('');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
 }
 
 // ============ EDIT ============
@@ -385,13 +392,17 @@ document.getElementById('edit-modal').addEventListener('click', e => {
 
 // ============ GAMES HUB ============
 function showGamesHub() {
-  document.getElementById('games-hub').style.display = 'block';
-  document.getElementById('game-area').style.display = 'none';
+  const hub = document.getElementById('games-hub');
+  const area = document.getElementById('game-area');
+  if (hub) hub.style.display = 'block';
+  if (area) area.style.display = 'none';
 }
 
 function openGame(mode) {
-  document.getElementById('games-hub').style.display = 'none';
-  document.getElementById('game-area').style.display = 'block';
+  const hub = document.getElementById('games-hub');
+  const area = document.getElementById('game-area');
+  if (hub) hub.style.display = 'none';
+  if (area) area.style.display = 'block';
   quizMode = mode;
   if (mode === 'flash') { renderFlash(); return; }
   startQuiz(mode);
@@ -401,15 +412,12 @@ function openGame(mode) {
 const QUIZ_BATCH = 50;
 
 function getSessionPool(mode) {
-  // Har session uchun key: mode + soat (har 1 soatda yangi pool)
   const hourKey = Math.floor(Date.now() / (1000 * 60 * 60));
   const key = `mv_qpool_${mode}_${hourKey}`;
   const prevKey = `mv_qpool_key_${mode}`;
   const storedKey = localStorage.getItem(prevKey);
 
-  // Yangi soat → yangi pool
   if (storedKey !== String(hourKey)) {
-    // Shuffled indices saqlash
     const indices = [...Array(words.length).keys()].sort(() => Math.random() - 0.5);
     const batch = indices.slice(0, Math.min(QUIZ_BATCH, words.length));
     localStorage.setItem(key, JSON.stringify(batch));
@@ -432,7 +440,6 @@ function startQuiz(mode) {
       <div class="empty"><div class="emoji">🧩</div><p>Add at least 4 words to play!</p></div>`;
     return;
   }
-  // Synonym quiz uchun kamida 4ta synonym kerak
   if (mode === 'quiz-syn') {
     const hasSyn = words.filter(w => w.syn && w.syn.trim());
     if (hasSyn.length < 4) {
@@ -446,7 +453,6 @@ function startQuiz(mode) {
   const poolIndices = getSessionPool(mode);
   let pool = poolIndices.map(i => words[i]).filter(Boolean);
 
-  // Synonym mode uchun faqat synonymli so'zlar
   if (mode === 'quiz-syn') {
     pool = pool.filter(w => w.syn && w.syn.trim());
     if (pool.length < 4) pool = words.filter(w => w.syn && w.syn.trim()).slice(0, QUIZ_BATCH);
@@ -464,7 +470,6 @@ function showQuizQuestion() {
   const current = quizPool[quizIndex];
   const area = document.getElementById('game-area');
 
-  // Soat hisoblagich
   const hourKey = Math.floor(Date.now() / (1000 * 60 * 60));
   const nextReset = new Date((hourKey + 1) * 1000 * 60 * 60);
   const minsLeft = Math.round((nextReset - Date.now()) / 60000);
@@ -487,13 +492,10 @@ function showQuizQuestion() {
     const others = words.filter(w => w !== current && w.eng !== current.eng).sort(() => Math.random()-0.5).slice(0,3);
     options = [...others.map(o=>o.eng), current.eng].sort(()=>Math.random()-0.5);
   } else if (quizMode === 'quiz-syn') {
-    // Synonym quiz: so'zni ko'rsat, 4ta english worddan synonymini top
     questionText = current.eng;
     hintText = 'Which word is a synonym?';
-    // current.syn dan birinchi synonymni ol
     const synWords = current.syn.split(',').map(s=>s.trim()).filter(Boolean);
     correctAnswer = synWords[0];
-    // 3ta boshqa so'z (non-synonym)
     const others = words
       .filter(w => w !== current && w.eng.toLowerCase() !== correctAnswer.toLowerCase())
       .sort(() => Math.random()-0.5)
@@ -511,12 +513,12 @@ function showQuizQuestion() {
       <div class="progress-bar-wrap">
         <div class="progress-bar" style="width:${(quizIndex/quizPool.length)*100}%"></div>
       </div>
-      <div class="quiz-word">${questionText}</div>
+      <div class="quiz-word">${escapeHtml(questionText)}</div>
       <div class="quiz-hint">${hintText}</div>
       <div class="quiz-options">
         ${options.map(opt => `
-          <button class="quiz-opt" onclick="checkAnswer(this,'${opt.replace(/'/g,"\\'")}','${correctAnswer.replace(/'/g,"\\'")}')">
-            ${opt}
+          <button class="quiz-opt" onclick="checkAnswer(this,'${opt.replace(/'/g,"\\'").replace(/"/g,"&quot;")}','${correctAnswer.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">
+            ${escapeHtml(opt)}
           </button>`).join('')}
       </div>
     </div>`;
@@ -572,13 +574,13 @@ function renderFlash() {
     <div class="flashcard-wrap">
       <div class="flashcard" id="fc-card" onclick="flipCard()">
         <div class="flashcard-front">
-          <div class="fc-word">${w.eng}</div>
+          <div class="fc-word">${escapeHtml(w.eng)}</div>
           <div class="fc-hint">tap to reveal</div>
         </div>
         <div class="flashcard-back">
-          <div class="fc-trans">${w.uz}</div>
-          ${w.syn ? `<div class="fc-syn">≈ ${w.syn}</div>` : ''}
-          ${w.ex ? `<div class="fc-hint">"${w.ex}"</div>` : ''}
+          <div class="fc-trans">${escapeHtml(w.uz)}</div>
+          ${w.syn ? `<div class="fc-syn">≈ ${escapeHtml(w.syn)}</div>` : ''}
+          ${w.ex ? `<div class="fc-hint">"${escapeHtml(w.ex)}"</div>` : ''}
         </div>
       </div>
     </div>
@@ -605,8 +607,14 @@ function renderStats() {
   const reviewed = words.filter(w=>w.quizCount>0).length;
   const today = new Date().toDateString();
   const todayAdded = words.filter(w=>new Date(w.date).toDateString()===today).length;
-  const accuracy = words.reduce((a,w)=>a+(w.quizCount>0?w.correctCount/w.quizCount:0),0);
-  const avgAcc = total>0 ? Math.round((accuracy/total)*100) : 0;
+  let accuracy = 0;
+  let totalAccuracy = 0;
+  for (let w of words) {
+    if (w.quizCount > 0) {
+      totalAccuracy += w.correctCount / w.quizCount;
+    }
+  }
+  const avgAcc = total>0 ? Math.round((totalAccuracy/total)*100) : 0;
 
   document.getElementById('stats-area').innerHTML = `
     <div class="stats-grid">
@@ -620,9 +628,9 @@ function renderStats() {
       ${words.length===0 ? '<p style="color:var(--text2)">No words yet.</p>' :
         words.map(w=>`
           <div style="padding:10px 0;border-bottom:1px solid var(--border)">
-            <div style="font-weight:700">${w.eng} <span style="color:var(--text2);font-weight:400">— ${w.uz}</span></div>
-            ${w.syn?`<div style="color:#f9ca24;font-size:0.8rem">≈ ${w.syn}</div>`:''}
-            ${w.ex?`<div style="color:var(--text2);font-size:0.8rem;font-style:italic">"${w.ex}"</div>`:''}
+            <div style="font-weight:700">${escapeHtml(w.eng)} <span style="color:var(--text2);font-weight:400">— ${escapeHtml(w.uz)}</span></div>
+            ${w.syn?`<div style="color:#f9ca24;font-size:0.8rem">≈ ${escapeHtml(w.syn)}</div>`:''}
+            ${w.ex?`<div style="color:var(--text2);font-size:0.8rem;font-style:italic">"${escapeHtml(w.ex)}"</div>`:''}
           </div>`).join('')
       }
     </div>`;
@@ -631,11 +639,14 @@ function renderStats() {
 // ============ NOTIFICATIONS ============
 function renderNotifSection() {
   const el = document.getElementById('notif-section');
+  if (!el) return;
   if (!('Notification' in window)||!('serviceWorker' in navigator)){el.innerHTML='';return;}
   if (Notification.permission==='granted') {
     el.innerHTML=`<div class="notif-banner"><div class="icon">🔔</div><div><p><strong>Notifications ON</strong><br>Daily reminders are active.</p></div></div>`;
   } else if (Notification.permission!=='denied') {
     el.innerHTML=`<div class="notif-banner"><div class="icon">🔔</div><div><p><strong>Enable Reminders</strong><br>Get daily notifications to practice.</p><button onclick="requestNotif()">Enable Notifications</button></div></div>`;
+  } else {
+    el.innerHTML='';
   }
 }
 
